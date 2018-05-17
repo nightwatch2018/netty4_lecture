@@ -1,4 +1,4 @@
-package com.chris.nettylecture.firstexample;
+package com.chris.nettylecture.hellonetty;
 
 import java.net.URI;
 

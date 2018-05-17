@@ -1,4 +1,4 @@
-package com.chris.nettylecture.firstexample;
+package com.chris.nettylecture.hellonetty;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
