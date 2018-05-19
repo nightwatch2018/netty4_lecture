@@ -31,17 +31,17 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
 				ctx.channel().close();
 				return;
 			}
-			
+			 //1.封装响应报文对象
 			ByteBuf content = Unpooled.copiedBuffer("Hello Netty",CharsetUtil.UTF_8);
 			FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,
 					HttpResponseStatus.OK,content);
-			
+			//2.设置响应报文Header信息
 			response.headers().set(HttpHeaderNames.CONTENT_TYPE,"text/plain");
 			response.headers().set(HttpHeaderNames.CONTENT_LENGTH,content.readableBytes());
-			
+			//3.向客户端返回响应报文
 			ctx.writeAndFlush(response);
-			
-			//如果判断出客户端是HTTP1.1协议的话，这里可以手动关闭与客户端的连接,和超时时间
+			//4.关闭与客户端的连接
+			//可以判断客户端是HTTP1.1协议或keep-alived超时时间，可以选择手动关闭与客户端的连接
 			ctx.channel().close();
 		}
 		
@@ -100,22 +100,5 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
 		System.out.println("channelWritabilityChanged....................." + ctx.hashCode());
 		super.channelWritabilityChanged(ctx);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 }

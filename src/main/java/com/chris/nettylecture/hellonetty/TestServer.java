@@ -14,17 +14,19 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 public class TestServer {
 	
 	public static void main(String[] args)throws Exception {
-		
+		// 1.实例化两个EventLoopGroup对象
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		try {
-			ServerBootstrap sbs = new ServerBootstrap();
-			sbs.group(bossGroup,workerGroup).channel(NioServerSocketChannel.class)
+			//2.实例化ServerBootstrap，用来配置服务器端的相关组件
+			ServerBootstrap serverBootstrap = new ServerBootstrap();
+			serverBootstrap.group(bossGroup,workerGroup).channel(NioServerSocketChannel.class)
 				.childHandler(new TestServerInitializer());
-			
-			ChannelFuture channelFuture = sbs.bind(8899).sync();
+			//3.绑定监听端口
+			ChannelFuture channelFuture = serverBootstrap.bind(8899).sync();
 			channelFuture.channel().closeFuture().sync();
 		} finally {
+			//优雅关闭两个EventLoopGroup对象。
 			bossGroup.shutdownGracefully();
 			workerGroup.shutdownGracefully();
 		}
